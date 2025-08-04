@@ -1,22 +1,22 @@
-// src/components/TodoItem.tsx
-
-// Импортируем наш тип, чтобы использовать его
+import React from 'react';
 import { Todo } from '../types/Todo';
 
-// Описываем, какие пропсы ожидает наш компонент
 interface TodoItemProps {
-  // Здесь мы говорим, что компонент ожидает свойство 'todo' типа 'Todo'
   todo: Todo;
-  // Мы также можем передать отдельные свойства, если хотим
-  // text: string;
-  // isCompleted: boolean;
+  removeTodo: (id: number) => void;
+  toggleTodo: (id: number) => void;
 }
 
-// И используем этот интерфейс в компоненте
-const TodoItem = ({ todo }: TodoItemProps) => {
+const TodoItem: React.FC<TodoItemProps> = ({ todo, removeTodo, toggleTodo }) => {
   return (
-    <li style={{ textDecoration: todo.isCompleted ? 'line-through' : 'none' }}>
-      {todo.text}
+    <li>
+      <span
+        style={{ textDecoration: todo.isCompleted ? 'line-through' : 'none', cursor: 'pointer' }}
+        onClick={() => toggleTodo(todo.id)}
+      >
+        {todo.text}
+      </span>
+      <button onClick={() => removeTodo(todo.id)}>Удалить</button>
     </li>
   );
 };
